@@ -21,7 +21,8 @@ ci_upload() {
 	elif [ "$CI_ARTIFACTS_UPLOAD_METHOD" = "mega" ]; then
 		mega-put "$1" / > /dev/null 2>&1 && mega-export -a "/$(basename $1)" | awk '{print $3}'
 	elif [ "$CI_ARTIFACTS_UPLOAD_METHOD" = "sourceforge" ]; then
-		printf WIP
+		sshpass -p '$SFPASS' scp $CI_MAIN_DIR/out/target/product/$CI_DEVICE/$CI_OUT_ARTIFACTS_NAME $SFUSER@frs.sourceforge.net:/home/frs/project/$SFPATH
+
 	fi
 }
 
