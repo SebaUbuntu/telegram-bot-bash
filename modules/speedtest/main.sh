@@ -17,5 +17,5 @@
 
 module_speedtest() {
 	local MESSAGE_ID=$(tg_send_message --chat_id "$(tg_get_chat_id "$@")" --text "Running speedtest..." --reply_to_message_id "$(tg_get_message_id "$@")" | jq .result.message_id)
-	tg_edit_message_text --chat_id "$(tg_get_chat_id "$@")" --text "$MESSAGE_ID" --reply_to_message_id "\`$(speedtest-cli | grep "Mbit/s")\`" --parse_mode "Markdown"
+	tg_edit_message_text --chat_id "$(tg_get_chat_id "$@")" --message_id "$MESSAGE_ID" --text "\`$(speedtest-cli | grep "Mbit/s")\`" --parse_mode "Markdown"
 }
