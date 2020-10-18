@@ -28,7 +28,7 @@ import_modules
 
 if [ $(telegram getUpdates | jq .ok) != "true" ]; then
 	echo "Error! Make sure you added the right HTTP API token in variables.sh"
-	return 1
+	exit 1
 fi
 
 echo "Bot up and running!"
