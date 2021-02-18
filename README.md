@@ -1,5 +1,7 @@
 # HomeBot, a modular Telegram bot, written in Python
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/2cadab25a04c42779f3203b4a61bd6ef)](https://app.codacy.com/gh/SebaUbuntu/HomeBot?utm_source=github.com&utm_medium=referral&utm_content=SebaUbuntu/HomeBot&utm_campaign=Badge_Grade)
+
 ## How to use it
 
 -   Execute `pip3 install .` to install all the dependencies
