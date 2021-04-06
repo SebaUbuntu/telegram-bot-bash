@@ -1,0 +1,6 @@
+name = "RevengeOS"
+category = "ROMs"
+lunch_prefix = "revengeos"
+lunch_suffix = "userdebug"
+build_target = "bacon"
+artifacts = "RevengeOS-*.zip"
