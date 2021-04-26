@@ -14,7 +14,7 @@ python-telegram-bot = "^13.4.1"
 python-dotenv = "^0.17.0"
 requests = "^2.25.1"
 speedtest-cli = "^2.1.3"
-twrpdtgen = "^1.2.5"
+twrpdtgen = "^1.2.6"
 natsort = "^7.1.1"
 
 [tool.poetry.dev-dependencies]
