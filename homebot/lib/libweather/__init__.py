@@ -1,6 +1,6 @@
 """OpenWeatherMap implementation library."""
 
-from homebot import get_config
+from homebot.core.config import get_config
 import requests
 
 DATA_VERSION = "2.5"
@@ -32,10 +32,10 @@ WIND_UNITS = {
 class Weather:
 	def __init__(self):
 		"""Initialize weather instance."""
-		self.api_key = get_config("WEATHER_API_KEY", None)
+		self.api_key = get_config("API_KEY")
 		if self.api_key is None:
 			raise AssertionError("An API key is needed")
-		self.base_unit = get_config("WEATHER_TEMP_UNIT", "metric")
+		self.base_unit = get_config("TEMP_UNIT") if get_config("TEMP_UNIT") is not None else "metric"
 		self.temp_unit = TEMP_UNITS.get(self.base_unit, "K")
 		self.wind_unit = WIND_UNITS.get(self.base_unit, "km/h")
 

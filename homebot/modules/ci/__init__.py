@@ -1,6 +1,6 @@
 """HomeBot CI module."""
 
-from homebot import get_config
+from homebot.core.config import get_config
 from homebot.core.error_handler import format_exception
 from homebot.core.logging import LOGE, LOGI
 from homebot.core.modules_manager import ModuleBase
@@ -23,7 +23,7 @@ class Module(ModuleBase):
 									  "Ask to who host this bot to add you to the authorized people list")
 			return
 
-		if get_config("CI_CHANNEL_ID") == "":
+		if get_config("ci.channel_id") is None:
 			update.message.reply_text("Error: CI channel or user ID not defined")
 			LOGE("CI channel or user ID not defined")
 			return

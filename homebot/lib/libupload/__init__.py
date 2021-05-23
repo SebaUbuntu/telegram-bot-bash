@@ -1,7 +1,7 @@
 """Remote upload utils library."""
 
 from ftplib import FTP, error_perm
-from homebot import get_config
+from homebot.core.config import get_config
 from homebot.core.logging import LOGI
 import os.path
 import paramiko
@@ -43,13 +43,13 @@ def sftp_chdir(sftp: paramiko.SFTPClient, remote_directory: Path):
 class Uploader:
 	def __init__(self):
 		"""Initialize the uploader variables."""
-		self.method = get_config("CI_ARTIFACTS_UPLOAD_METHOD")
-		self.destination_path_base = Path(get_config("CI_UPLOAD_BASE_DIR"))
-		self.host = get_config("CI_UPLOAD_HOST")
-		self.port = get_config("CI_UPLOAD_PORT")
-		self.server = self.host if self.port is None or self.port == "" else f"{self.host}:{self.port}"
-		self.username = get_config("CI_UPLOAD_USERNAME")
-		self.password = get_config("CI_UPLOAD_PASSWORD")
+		self.method = get_config("libupload.method")
+		self.destination_path_base = Path(get_config("libupload.base_dir"))
+		self.host = get_config("libupload.host")
+		self.port = get_config("libupload.port")
+		self.server = self.host if self.port is None else f"{self.host}:{self.port}"
+		self.username = get_config("libupload.username")
+		self.password = get_config("libupload.password")
 
 		if self.method not in ALLOWED_METHODS:
 			raise NotImplementedError("Upload method not valid")

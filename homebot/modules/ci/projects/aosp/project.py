@@ -1,14 +1,15 @@
 from datetime import datetime
-from homebot.modules.ci.project import ProjectBase
-from homebot import bot_path, get_config
+from pathlib import Path
+from homebot import bot_path
+from homebot.core.config import get_config
 from homebot.core.error_handler import format_exception
 from homebot.core.logging import LOGE
-from homebot.modules.ci.parser import CIParser
-from homebot.modules.ci.artifacts import Artifacts, STATUS_UPLOADING, STATUS_UPLOADED, STATUS_NOT_UPLOADED
-from homebot.modules.ci.projects.aosp.post import PostManager
-from homebot.modules.ci.projects.aosp.returncode import SUCCESS, ERROR_CODES, NEEDS_LOGS_UPLOAD
 from homebot.lib.libupload import Uploader
-from pathlib import Path
+from homebot.modules.ci.artifacts import STATUS_NOT_UPLOADED, STATUS_UPLOADED, STATUS_UPLOADING, Artifacts
+from homebot.modules.ci.parser import CIParser
+from homebot.modules.ci.project import ProjectBase
+from homebot.modules.ci.projects.aosp.post import PostManager
+from homebot.modules.ci.projects.aosp.returncode import ERROR_CODES, NEEDS_LOGS_UPLOAD, SUCCESS
 import re
 import subprocess
 from telegram.ext import CallbackContext
@@ -46,7 +47,7 @@ class AOSPProject(ProjectBase):
 		self.parsed_args = parser.parse_args(args)
 
 	def build(self):
-		project_dir = Path(f"{get_config('CI_MAIN_DIR')}/{self.name}-{self.version}")
+		project_dir = Path(f"{get_config('ci.main_dir', '')}/{self.name}-{self.version}")
 		device_out_dir = project_dir / "out" / "target" / "product" / self.parsed_args.device
 
 		artifacts = Artifacts(device_out_dir, self.artifacts)
@@ -105,10 +106,10 @@ class AOSPProject(ProjectBase):
 		needs_logs_upload = NEEDS_LOGS_UPLOAD.get(returncode, False)
 		if needs_logs_upload != False:
 			log_file = open(project_dir / needs_logs_upload, "rb")
-			self.context.bot.send_document(get_config("CI_CHANNEL_ID"), log_file)
+			self.context.bot.send_document(get_config("ci.channel_id"), log_file)
 			log_file.close()
 
-		if returncode != SUCCESS or get_config("CI_UPLOAD_ARTIFACTS") != "true":
+		if returncode != SUCCESS or get_config("ci.upload_artifacts", False) is not True:
 			return
 
 		# Upload artifacts

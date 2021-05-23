@@ -1,9 +1,9 @@
-from homebot import get_config
+from homebot.core.config import get_config
 from homebot.modules.ci.artifacts import Artifacts
 from telegram.error import TimedOut, RetryAfter
 from time import sleep
 
-chat_id = get_config("CI_CHANNEL_ID")
+chat_id = get_config("ci.channel_id")
 
 class PostManager:
 	def __init__(self, project, device: str, artifacts: Artifacts):

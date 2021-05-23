@@ -86,7 +86,7 @@ dmypy.json
 .vscode/
 
 # HomeBot configuration file
-config.env
+/config.py
 
 # Allow lib directory
 !/homebot/lib/

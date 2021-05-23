@@ -1,11 +1,11 @@
 """twrpdtgen CI project."""
 
 from datetime import date
+from homebot.core.config import get_config
 from homebot.modules.ci.parser import CIParser
 from homebot.modules.ci.project import ProjectBase
 from git.exc import GitCommandError
 from github import Github, GithubException
-from homebot import get_config
 from pathlib import Path
 import requests
 from telegram import Update
@@ -57,9 +57,9 @@ class Project(ProjectBase):
 
 		# Upload to GitHub
 		status_message.edit_text("Pushing to GitHub...")
-		gh_username = get_config("CI_GITHUB_USERNAME")
-		gh_token = get_config("CI_GITHUB_TOKEN")
-		gh_org_name = get_config("CI_TWRPDTGEN_GITHUB_ORG")
+		gh_username = get_config("ci.github_username")
+		gh_token = get_config("ci.github_token")
+		gh_org_name = get_config("ci.twrpdtgen.github_org")
 		repo_name = f"android_device_{devicetree.manufacturer}_{devicetree.codename}"
 		git_repo_url = f"https://{gh_username}:{gh_token}@github.com/{gh_org_name}/{repo_name}"
 
@@ -93,7 +93,7 @@ class Project(ProjectBase):
 
 		status_message.edit_text("Done")
 
-		channel_id = get_config("CI_TWRPDTGEN_CHANNEL_ID")
+		channel_id = get_config("ci.twrpdtgen.channel_id")
 		self.context.bot.send_message(channel_id,
 									  "TWRP device tree generated\n"
 									  f"Codename: {devicetree.codename}\n"
